@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wellness & Habit Tracker</title>
+  <link rel="stylesheet" href="webpage.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Wellness & Daily Habit Tracker</h1>
+      <div class="welcome-message">
+        <h3>Welcome to Your Personal Wellness Journey! 🌟</h3>
+        <p>Track your daily wellness metrics all in one place:</p>
+        <ul>
+          <li>💧 Monitor your water intake</li>
+          <li>😴 Track your sleep patterns</li>
+          <li>💪 Log your workouts and exercises</li>
+          <li>😊 Record your daily mood</li>
+        </ul>
+      </div>
+      <p>Track habits, water, sleep and mood — stay consistent, stay healthy.</p>
+    </header>
+
+    <main>
+      <section class="tracker-grid">
+        <div class="card habits">
+          <div class="card-header">
+            <h2>Daily Habits</h2>
+            <button id="clearHabits" class="btn ghost">Clear</button>
+          </div>
+
+          <ul id="habitsList" class="habits-list"></ul>
+
+          <form id="addHabitForm" class="add-habit-form">
+            <input id="habitName" type="text" placeholder="Add habit (e.g. Meditate)" required>
+            <button class="btn">Add</button>
+          </form>
+        </div>
+
+        <div class="card workout">
+          <h2>Workout Tracker</h2>
+          <form id="workoutForm" class="workout-form">
+            <div class="form-group">
+              <label>Exercise Name:</label>
+              <input type="text" id="exerciseName" required placeholder="e.g. Push-ups">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Sets:</label>
+                <input type="number" id="sets" required min="1" placeholder="3">
+              </div>
+              <div class="form-group">
+                <label>Reps:</label>
+                <input type="number" id="reps" required min="1" placeholder="12">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Rest Between Sets (seconds):</label>
+              <input type="number" id="restTime" required min="0" placeholder="60">
+            </div>
+            <button type="submit" class="btn primary">Log Exercise</button>
+          </form>
+          <div id="workoutLog" class="workout-log">
+            <h3>Today's Exercises</h3>
+            <ul id="exerciseList"></ul>
+          </div>
+        </div>
+
+        <div class="card wellbeing">
+          <h2>Daily Wellbeing Tracker</h2>
+          
+          <!-- Water Intake Section -->
+          <div class="wellbeing-section">
+            <h3>Water Intake</h3>
+            <div class="well-row">
+              <label>Glasses of Water</label>
+              <div class="stepper">
+                <button data-action="dec" class="btn small">-</button>
+                <span id="waterCount">0</span>
+                <button data-action="inc" class="btn small">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sleep Section -->
+          <div class="wellbeing-section">
+            <h3>Sleep Duration</h3>
+            <div class="well-row">
+              <label>Hours Slept</label>
+              <input id="sleepInput" type="number" min="0" max="24" step="0.5" placeholder="7.5">
+            </div>
+          </div>
+
+          <!-- Mood Section -->
+          <div class="wellbeing-section">
+            <h3>Daily Mood</h3>
+            <div class="well-row">
+              <div class="mood-options">
+                <button class="mood" data-mood="1" title="Feeling down">😞</button>
+                <button class="mood" data-mood="2" title="Just okay">😐</button>
+                <button class="mood" data-mood="3" title="Pretty good">🙂</button>
+                <button class="mood" data-mood="4" title="Excellent">😄</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Notes Section -->
+          <div class="wellbeing-section">
+            <h3>Daily Notes</h3>
+            <div class="well-comment">
+              <textarea id="commentInput" rows="3" placeholder="How was your day? Add notes here..."></textarea>
+              <div class="comment-actions">
+                <button id="saveComment" class="btn primary">Save Note</button>
+                <button id="resetComment" class="btn ghost">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="well-actions">
+            <button id="saveWellbeing" class="btn primary">Save All</button>
+            <button id="resetWellbeing" class="btn ghost">Reset All</button>
+          </div>
+        </div>
+
+        <div class="card stats">
+          <h2>Weekly Summary</h2>
+          <div id="summary" class="summary">
+            <p>No data yet. Save today's wellbeing and complete habits to see progress.</p>
+          </div>
+        </div>
+
+        <div class="card comments-history">
+          <details>
+            <summary>Past Daily Comments</summary>
+            <div id="pastComments" class="past-comments">
+              <p class="no-comments">No previous comments yet.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <small>Local-only template · data saved to browser</small>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>

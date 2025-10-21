@@ -1,0 +1,354 @@
+:root {
+  --primary-color: #7c5cbf;
+  --background-color: #f5f6fa;
+  --card-color: #ffffff;
+  --text-color: #2d3436;
+  --border-color: #dfe6e9;
+  --accent-color: #a55eea;
+}
+
+/* Reset / base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Layout */
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Cards */
+.card {
+  background: var(--card-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 16px rgba(34, 49, 63, 0.06);
+  border: 1px solid rgba(15, 15, 15, 0.03);
+}
+
+.card h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+  font-weight: 600;
+}
+
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  box-shadow: 0 6px 18px rgba(124, 92, 191, 0.14);
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+}
+
+.btn.small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="number"],
+select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 200px;
+  background: #fff;
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(165, 94, 234, 0.08);
+}
+
+/* Habits list */
+.habits-list {
+  list-style: none;
+  margin: 1rem 0;
+}
+
+/* Welcome message */
+.welcome-message {
+  background: linear-gradient(90deg, rgba(124, 92, 191, 0.06), rgba(165, 94, 234, 0.04));
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0 1.75rem;
+  text-align: left;
+}
+
+.welcome-message h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.welcome-message p {
+  color: #374151;
+  margin-bottom: 0.6rem;
+}
+
+.welcome-message ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding-left: 0;
+}
+
+.welcome-message li {
+  margin: 0.35rem 0;
+  font-size: 0.98rem;
+}
+
+/* Forms */
+.workout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Workout log */
+.workout-log {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.workout-log h3 {
+  font-size: 1.05rem;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+#exerciseList {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Wellbeing */
+.well-row {
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#waterCount {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Mood options */
+.mood-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mood {
+  font-size: 1.4rem;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.mood:hover {
+  transform: scale(1.08);
+}
+
+.mood[data-selected="true"] {
+  background: linear-gradient(90deg, rgba(124, 92, 191, 0.12), rgba(165, 94, 234, 0.08));
+  border-color: rgba(124, 92, 191, 0.18);
+}
+
+/* Well actions */
+.well-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 560px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .tracker-grid {
+    gap: 1rem;
+  }
+  .container {
+    padding: 1rem;
+  }
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--background-color);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+}
+
+.comments-history {
+  margin-top: 1rem;
+}
+
+.comments-history details summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-weight: bold;
+}
+
+.past-comments {
+  margin-top: 1rem;
+}
+
+.comment-entry {
+  border-bottom: 1px solid #eee;
+  padding: 0.8rem 0;
+}
+
+.comment-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.comment-text {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.no-comments {
+  color: #666;
+  font-style: italic;
+}
+
+.well-comment {
+  margin-bottom: 1rem;
+}
+
+.comment-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.past-comments .comment-entry {
+  background: #f5f5f5;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.past-comments .comment-date {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.wellbeing-section {
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.wellbeing-section:last-of-type {
+  border-bottom: none;
+}
+
+.wellbeing-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  color: #555;
+}
+
+.mood-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.mood {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mood:hover {
+  transform: scale(1.1);
+}
+
+.mood.selected {
+  border-color: #4CAF50;
+  background: #e8f5e9;
+}
+
+.well-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
