@@ -23,11 +23,13 @@
 
 /* Cards */
 .card {
-  background: var(--card-color);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(15,23,32,0.06);
+  box-shadow: 0 8px 30px rgba(12,20,30,0.25);
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 6px 16px rgba(34, 49, 63, 0.06);
-  border: 1px solid rgba(15, 15, 15, 0.03);
+  backdrop-filter: blur(6px);
 }
 
 .card h2 {
@@ -53,8 +55,10 @@
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  box-shadow: 0 6px 18px rgba(124, 92, 191, 0.14);
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  color: #052231;
+  border: none;
+  box-shadow: 0 6px 18px rgba(32,122,153,0.18);
 }
 
 .btn.ghost {
@@ -256,7 +260,7 @@ html {
 
 .main-nav a {
   text-decoration: none;
-  color: #333;
+  color: #e9f7fb;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: all 0.2s ease;
@@ -268,6 +272,8 @@ html {
 }
 
 .main-nav a.active {
+  text-decoration: underline;
+  font-weight: 600;
   background: #4CAF50;
   color: white;
 }
@@ -511,4 +517,52 @@ html {
   margin: 0.15rem 0;
   color: #333;
   font-size: 0.95rem;
+}
+
+/* Eye-catching page background + improved card contrast */
+body {
+  /* colorful diagonal gradient */
+  background: linear-gradient(135deg,
+    #0f2027 0%,
+    #203a43 25%,
+    #2c5364 50%,
+    #4facfe 75%,
+    #00f2fe 100%);
+  background-attachment: fixed;
+  color: #0f1720;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* soft angled overlay for depth */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.03), transparent 10%),
+              radial-gradient(900px 400px at 90% 90%, rgba(0,0,0,0.06), transparent 12%);
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+/* ensure main content sits above the decorative overlay */
+.container, main, header, footer, .card {
+  position: relative;
+  z-index: 1;
+}
+
+/* ensure links / nav are readable */
+.main-nav a {
+  color: #e9f7fb;
+}
+.main-nav a.active {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* headings and important text contrast */
+h1, h2 {
+  color: #071226;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.12);
 }
