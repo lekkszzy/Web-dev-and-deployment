@@ -117,6 +117,70 @@ document.addEventListener('DOMContentLoaded', () => {
 // Minimal interactivity: habits, workout logging, water stepper, mood, sleep, save/reset, and summary.
 
 document.addEventListener('DOMContentLoaded', () => {
+  // If no stored user data, keep the app at default (home / blank trackers).
+  function hasStoredData(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed.length > 0;
+      if (parsed && typeof parsed === 'object') return Object.keys(parsed).length > 0;
+      return Boolean(parsed);
+    } catch {
+      return false;
+    }
+  }
+
+  const dataKeys = ['wellbeingLog', 'wellbeingData', 'workoutLog', 'pastNotes', 'habits'];
+  const anyLogged = dataKeys.some(hasStoredData);
+
+  // Set initial UI: default if nothing logged, otherwise render stored views
+  if (!anyLogged) {
+    // Show home section by default
+    document.querySelectorAll('main .section').forEach(s => s.classList.remove('active'));
+    const home = document.getElementById('home');
+    if (home) home.classList.add('active');
+
+    // Clear nav active states and mark home link if present
+    document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+    const homeLink = document.querySelector('.main-nav a[href="#home"]');
+    if (homeLink) homeLink.classList.add('active');
+
+    // Ensure wellbeing inputs show 0/defaults
+    const waterInput = document.getElementById('waterInput');
+    const waterCount = document.getElementById('waterCount');
+    const sleepInput = document.getElementById('sleepInput');
+    const daySelect = document.getElementById('daySelect');
+
+    if (waterInput && (waterInput.value === '' || waterInput.value === null)) waterInput.value = '0';
+    if (waterCount && (!waterCount.textContent || waterCount.textContent.trim() === '')) waterCount.textContent = '0';
+    if (sleepInput && (sleepInput.value === '' || sleepInput.value === null)) sleepInput.value = '0';
+    if (daySelect) daySelect.value = '';
+
+    // Clear mood selection UI
+    document.querySelectorAll('.mood-options .mood').forEach(b => b.classList.remove('selected'));
+
+    // Render weekly area with "Not set" if it exists
+    const weekly = document.getElementById('weeklyByDay');
+    if (weekly) {
+      const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      weekly.innerHTML = DAYS.map(day => `
+        <div class="day-entry" data-day="${day}">
+          <h4>${day}</h4>
+          <p>Water: <strong>Not set</strong></p>
+          <p>Sleep: <strong>Not set</strong></p>
+          <p>Mood: <strong>Not set</strong></p>
+        </div>
+      `).join('');
+    }
+  } else {
+    // There is stored data — call render functions if present to display it
+    if (typeof renderWeeklyFromLog === 'function') renderWeeklyFromLog();
+    if (typeof renderWorkouts === 'function') renderWorkouts();
+    if (typeof renderNotes === 'function') renderNotes();
+    if (typeof renderHabits === 'function') renderHabits();
+  }
+
   // --- Helpers ---
   const qs = (s) => document.querySelector(s);
   const qsa = (s) => Array.from(document.querySelectorAll(s));
