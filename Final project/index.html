@@ -92,6 +92,24 @@
         <div class="card wellbeing">
           <h2>Daily Wellbeing Tracker</h2>
           
+          <!-- Day Selection -->
+          <div class="wellbeing-section">
+            <h3>Select Day</h3>
+            <div class="well-row">
+              <label>Day of the Week</label>
+              <select id="daySelect" required>
+                <option value="">Select a day...</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+          
           <!-- Water Intake Section -->
           <div class="wellbeing-section">
             <h3>Water Intake</h3>
@@ -127,18 +145,6 @@
             </div>
           </div>
 
-          <!-- Daily Notes Section -->
-          <div class="wellbeing-section">
-            <h3>Daily Notes</h3>
-            <div class="well-comment">
-              <textarea id="commentInput" rows="3" placeholder="How was your day? Add notes here..."></textarea>
-              <div class="comment-actions">
-                <button id="saveComment" class="btn primary">Save Note</button>
-                <button id="resetComment" class="btn ghost">Clear</button>
-              </div>
-            </div>
-          </div>
-
           <!-- Action Buttons -->
           <div class="well-actions">
             <button id="saveWellbeing" class="btn primary">Save All</button>
@@ -152,7 +158,10 @@
         <div class="card stats">
           <h2>Weekly Summary</h2>
           <div id="summary" class="summary">
-            <p>No data yet. Save today's wellbeing and complete habits to see progress.</p>
+            <!-- Per-day breakdown: each day shows water and sleep saved for that day -->
+            <div id="weeklyByDay" class="weekly-by-day">
+              <!-- JS will render seven .day-entry blocks here (Monday → Sunday) -->
+            </div>
           </div>
         </div>
       </section>

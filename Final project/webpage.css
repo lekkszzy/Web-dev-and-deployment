@@ -433,3 +433,82 @@ html {
 .welcome-screen p {
   color: #666;
 }
+
+.summary-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.summary-section h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.chart {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.chart span {
+    padding: 0.3rem;
+    margin: 0 0.2rem;
+    background: #e8f5e9;
+    border-radius: 3px;
+}
+
+#daySelect {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.daily-breakdown table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.daily-breakdown th,
+.daily-breakdown td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.daily-breakdown th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.weekly-by-day {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+@media(min-width:700px){
+  .weekly-by-day {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.day-entry {
+  background: #f8f9fb;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+.day-entry h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+}
+.day-entry p {
+  margin: 0.15rem 0;
+  color: #333;
+  font-size: 0.95rem;
+}
