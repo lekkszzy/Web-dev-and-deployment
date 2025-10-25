@@ -28,8 +28,8 @@
         <li><a href="#habits-section">Daily Habits</a></li>
         <li><a href="#workout-section">Workout Tracker</a></li>
         <li><a href="#wellbeing-section">Wellbeing</a></li>
-        <li><a href="#weekly-summary">Weekly Summary</a></li>
         <li><a href="#past-notes">Past Notes</a></li>
+        <li><a href="#saved-section">Saved</a></li>
       </ul>
     </nav>
 
@@ -157,6 +157,9 @@
       <section id="weekly-summary" class="section">
         <div class="card stats">
           <h2>Weekly Summary</h2>
+          <div class="summary-actions">
+            <button id="clearWeeklySummary" class="btn ghost">Clear Weekly Summary</button>
+          </div>
           <div id="summary" class="summary">
             <!-- Per-day breakdown: each day shows water and sleep saved for that day -->
             <div id="weeklyByDay" class="weekly-by-day">
@@ -169,12 +172,84 @@
       <!-- Past Notes Section -->
       <section id="past-notes" class="section">
         <div class="card comments-history">
+          <h2>Past Notes</h2>
+
+          <form id="noteForm" class="note-form">
+            <label for="noteInput">Write a comment</label>
+            <textarea id="noteInput" rows="4" placeholder="Write a note about your day..."></textarea>
+            <div class="note-actions">
+              <button id="saveNote" class="btn primary">Save Note</button>
+              <button id="resetNote" class="btn ghost" type="button">Clear</button>
+              <!-- Clear all saved notes -->
+              <button id="clearAllNotes" class="btn ghost" type="button">Clear All Notes</button>
+            </div>
+          </form>
+
           <details>
             <summary>Past Daily Comments</summary>
             <div id="pastComments" class="past-comments">
               <p class="no-comments">No previous comments yet.</p>
             </div>
           </details>
+        </div>
+      </section>
+
+      <!-- Saved Section (per-day) -->
+      <section id="saved-section" class="section">
+        <div class="card saved">
+          <h2>Saved</h2>
+          <p class="muted">Saved wellbeing entries grouped by weekday.</p>
+
+          <div id="savedByDay" class="weekly-by-day">
+            <div class="day-entry" data-day="Monday">
+              <h4>Monday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Tuesday">
+              <h4>Tuesday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Wednesday">
+              <h4>Wednesday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Thursday">
+              <h4>Thursday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Friday">
+              <h4>Friday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Saturday">
+              <h4>Saturday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+
+            <div class="day-entry" data-day="Sunday">
+              <h4>Sunday</h4>
+              <p>Water: <strong class="saved-water">Not set</strong></p>
+              <p>Sleep: <strong class="saved-sleep">Not set</strong></p>
+              <p>Mood: <strong class="saved-mood">Not set</strong></p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

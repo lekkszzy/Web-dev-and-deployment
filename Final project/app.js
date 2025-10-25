@@ -450,6 +450,238 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const STORAGE_KEY = 'wellbeingData';
+  const DEFAULT = { water: {}, sleep: {}, mood: {} };
+
+  // Elements
+  const daySelect = document.getElementById('daySelect');
+  const waterCountEl = document.getElementById('waterCount');
+  const sleepInputEl = document.getElementById('sleepInput');
+  const saveBtn = document.getElementById('saveWellbeing');
+  const resetBtn = document.getElementById('resetWellbeing');
+  const savedContainer = document.getElementById('savedByDay');
+  const moodBtns = document.querySelectorAll('.mood-options .mood');
+  const stepperBtns = document.querySelectorAll('.stepper button');
+
+  // Local state
+  let selectedMood = null;
+
+  // Helpers
+  function loadData() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify(DEFAULT));
+    } catch (err) {
+      console.error('loadData error', err);
+      return JSON.parse(JSON.stringify(DEFAULT));
+    }
+  }
+  function saveData(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // Stepper handlers (water)
+  if (stepperBtns && waterCountEl) {
+    stepperBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const action = e.currentTarget.dataset.action;
+        let n = parseInt(waterCountEl.textContent || '0', 10);
+        if (action === 'inc') n = Math.min(50, n + 1);
+        if (action === 'dec') n = Math.max(0, n - 1);
+        waterCountEl.textContent = String(n);
+      });
+    });
+  }
+
+  // Mood selection
+  if (moodBtns) {
+    moodBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        moodBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedMood = btn.dataset.mood || null;
+      });
+    });
+  }
+
+  // Validate sleep input
+  if (sleepInputEl) {
+    sleepInputEl.addEventListener('change', () => {
+      const v = parseFloat(sleepInputEl.value);
+      if (Number.isNaN(v)) { sleepInputEl.value = ''; return; }
+      sleepInputEl.value = String(Math.max(0, Math.min(24, v)));
+    });
+  }
+
+  // Update Saved UI
+  function moodEmoji(val) {
+    switch (String(val)) {
+      case '1': return '😞';
+      case '2': return '😐';
+      case '3': return '🙂';
+      case '4': return '😄';
+      default: return 'Not set';
+    }
+  }
+
+  function updateSavedSection() {
+    const data = loadData();
+    if (!savedContainer) return;
+    DAYS.forEach(day => {
+      const entry = savedContainer.querySelector(`.day-entry[data-day="${day}"]`);
+      if (!entry) return;
+      const wEl = entry.querySelector('.saved-water');
+      const sEl = entry.querySelector('.saved-sleep');
+      const mEl = entry.querySelector('.saved-mood');
+
+      const wText = (data.water && typeof data.water[day] !== 'undefined') ? `${data.water[day]} glasses` : 'Not set';
+      const sText = (data.sleep && typeof data.sleep[day] !== 'undefined' && data.sleep[day] !== null) ? `${data.sleep[day]} hours` : 'Not set';
+      const mText = (data.mood && typeof data.mood[day] !== 'undefined' && data.mood[day] !== null) ? moodEmoji(data.mood[day]) : 'Not set';
+
+      if (wEl) wEl.textContent = wText;
+      if (sEl) sEl.textContent = sText;
+      if (mEl) mEl.textContent = mText;
+    });
+  }
+
+  // Save handler
+  if (saveBtn) {
+    saveBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const day = daySelect?.value;
+      if (!day) { alert('Please select a day before saving.'); return; }
+
+      const water = parseInt(waterCountEl?.textContent || '0', 10) || 0;
+      const sleepRaw = sleepInputEl?.value;
+      const sleep = (sleepRaw === '' || sleepRaw === undefined) ? null : Math.max(0, Math.min(24, parseFloat(sleepRaw)));
+
+      const data = loadData();
+      data.water = data.water || {};
+      data.sleep = data.sleep || {};
+      data.mood = data.mood || {};
+
+      data.water[day] = water;
+      data.sleep[day] = (sleep === null ? null : sleep);
+      data.mood[day] = selectedMood !== null ? selectedMood : null;
+
+      saveData(data);
+
+      // update UI immediately
+      updateSavedSection();
+
+      // feedback
+      const orig = saveBtn.textContent;
+      saveBtn.textContent = 'Saved';
+      saveBtn.disabled = true;
+      setTimeout(() => { saveBtn.textContent = orig; saveBtn.disabled = false; }, 800);
+    });
+  }
+
+  // Reset inputs
+  if (resetBtn) {
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (daySelect) daySelect.value = '';
+      if (waterCountEl) waterCountEl.textContent = '0';
+      if (sleepInputEl) sleepInputEl.value = '';
+      selectedMood = null;
+      if (moodBtns) moodBtns.forEach(b => b.classList.remove('selected'));
+    });
+  }
+
+  // Clear stored weekly summary (button optional)
+  const clearBtn = document.getElementById('clearWeeklySummary');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!confirm('Clear all saved wellbeing entries? This cannot be undone.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      updateSavedSection();
+    });
+  }
+
+  // Initial render
+  updateSavedSection();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    function showSection(sectionId) {
+        // Hide all sections
+        sections.forEach(section => section.classList.remove('active'));
+        
+        // Remove active class from all buttons
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Show selected section
+        const targetSection = sectionId === 'home' ? 
+            document.getElementById('home') : 
+            document.getElementById(`${sectionId}-section`);
+        targetSection.classList.add('active');
+        
+        // Add active class to clicked button
+        const activeButton = document.querySelector(`[data-section="${sectionId}"]`);
+        activeButton.classList.add('active');
+    }
+
+    // Add click handlers to nav buttons
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const sectionId = button.getAttribute('data-section');
+            showSection(sectionId);
+        });
+    });
+
+    // Show home section by default
+    showSection('home');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('.main-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    // Function to show active section
+    function showSection(sectionId) {
+        // Hide all sections
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Remove active class from all nav links
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Show selected section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+
+        // Add active class to clicked nav link
+        const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    // Add click handlers to nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('href').substring(1);
+            showSection(sectionId);
+        });
+    });
+
+    // Show home section by default
+    showSection('home');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     // Initialize wellbeing data structure
     const defaultData = {
         water: {},
@@ -620,3 +852,122 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial render
   updateWeeklySummary();
 });
+
+// clear weekly summary (remove stored wellbeingData and re-render)
+(function attachClearWeeklySummary() {
+  const btn = document.getElementById('clearWeeklySummary');
+  if (!btn) return;
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!confirm('Clear all weekly summary data? This cannot be undone.')) return;
+    localStorage.removeItem('wellbeingData');
+    // If you also track other keys (e.g. past comments) clear them here as needed:
+    // localStorage.removeItem('dailyComments');
+
+    // re-render summary (assumes updateWeeklySummary exists in this file)
+    if (typeof updateWeeklySummary === 'function') {
+      updateWeeklySummary();
+    } else {
+      // fallback: clear UI container if updateWeeklySummary is not available
+      const container = document.getElementById('weeklyByDay');
+      if (container) container.innerHTML = '';
+    }
+
+    // clear wellbeing input fields
+    const daySelect = document.getElementById('daySelect');
+    const waterCount = document.getElementById('waterCount');
+    const sleepInput = document.getElementById('sleepInput');
+    if (daySelect) daySelect.value = '';
+    if (waterCount) waterCount.textContent = '0';
+    if (sleepInput) sleepInput.value = '';
+  });
+})();
+
+// Past notes (save/display)
+(function () {
+  const STORAGE_KEY = 'pastNotes';
+
+  function loadNotes() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  }
+
+  function saveNotes(notes) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  }
+
+  function createNoteElement(note) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'comment-entry';
+
+    const meta = document.createElement('div');
+    meta.className = 'comment-date';
+    meta.textContent = note.date;
+
+    const text = document.createElement('p');
+    text.className = 'comment-text';
+    text.textContent = note.text;
+
+    wrapper.appendChild(meta);
+    wrapper.appendChild(text);
+    return wrapper;
+  }
+
+  function displayNotes() {
+    const container = document.getElementById('pastComments');
+    if (!container) return;
+    const notes = loadNotes();
+    container.innerHTML = '';
+    if (!notes.length) {
+      const p = document.createElement('p');
+      p.className = 'no-comments';
+      p.textContent = 'No previous comments yet.';
+      container.appendChild(p);
+      return;
+    }
+    // newest first
+    notes.slice().reverse().forEach(n => container.appendChild(createNoteElement(n)));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const saveBtn = document.getElementById('saveNote');
+    const resetBtn = document.getElementById('resetNote');
+    const clearAllBtn = document.getElementById('clearAllNotes');
+    const noteInput = document.getElementById('noteInput');
+
+    if (saveBtn && noteInput) {
+      saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const text = noteInput.value.trim();
+        if (!text) return;
+        const notes = loadNotes();
+        notes.push({
+          date: new Date().toLocaleString(),
+          text
+        });
+        saveNotes(notes);
+        noteInput.value = '';
+        displayNotes();
+      });
+    }
+
+    if (resetBtn && noteInput) {
+      resetBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        noteInput.value = '';
+      });
+    }
+
+    // Clear ALL saved notes
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!confirm('Clear all saved notes? This cannot be undone.')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        displayNotes();
+      });
+    }
+
+    // initial render
+    displayNotes();
+  });
+})();
