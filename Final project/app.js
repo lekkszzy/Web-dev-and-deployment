@@ -286,3 +286,80 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSummary();
   displayComments();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    function showSection(sectionId) {
+        // Hide all sections
+        sections.forEach(section => section.classList.remove('active'));
+        
+        // Remove active class from all buttons
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Show selected section
+        const targetSection = sectionId === 'home' ? 
+            document.getElementById('home') : 
+            document.getElementById(`${sectionId}-section`);
+        targetSection.classList.add('active');
+        
+        // Add active class to clicked button
+        const activeButton = document.querySelector(`[data-section="${sectionId}"]`);
+        activeButton.classList.add('active');
+    }
+
+    // Add click handlers to nav buttons
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const sectionId = button.getAttribute('data-section');
+            showSection(sectionId);
+        });
+    });
+
+    // Show home section by default
+    showSection('home');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('.main-nav a');
+    const sections = document.querySelectorAll('.section');
+
+    // Function to show active section
+    function showSection(sectionId) {
+        // Hide all sections
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Remove active class from all nav links
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Show selected section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+
+        // Add active class to clicked nav link
+        const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    // Add click handlers to nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('href').substring(1);
+            showSection(sectionId);
+        });
+    });
+
+    // Show home section by default
+    showSection('home');
+});

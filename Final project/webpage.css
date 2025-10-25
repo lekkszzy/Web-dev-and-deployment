@@ -226,6 +226,70 @@ footer {
   font-size: 0.9rem;
 }
 
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navigation */
+.main-nav {
+  background: #fff;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2rem;
+  padding: 1rem;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.main-nav a:hover {
+  background: #f0f0f0;
+  color: #4CAF50;
+}
+
+.main-nav a.active {
+  background: #4CAF50;
+  color: white;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card {
+  scroll-margin-top: 4rem;
+}
+
 /* Responsive tweaks */
 @media (max-width: 560px) {
   .form-row {
@@ -351,4 +415,21 @@ footer {
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
+}
+
+.welcome-screen {
+  text-align: center;
+  padding: 3rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.welcome-screen h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.welcome-screen p {
+  color: #666;
 }

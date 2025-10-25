@@ -23,8 +23,25 @@
       <p>Track habits, water, sleep and mood — stay consistent, stay healthy.</p>
     </header>
 
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#habits-section">Daily Habits</a></li>
+        <li><a href="#workout-section">Workout Tracker</a></li>
+        <li><a href="#wellbeing-section">Wellbeing</a></li>
+        <li><a href="#weekly-summary">Weekly Summary</a></li>
+        <li><a href="#past-notes">Past Notes</a></li>
+      </ul>
+    </nav>
+
     <main>
-      <section class="tracker-grid">
+      <section id="home" class="section active">
+        <div class="welcome-screen">
+          <h2>Choose a section to begin</h2>
+          <p>Click on any navigation button above to start tracking your wellness journey.</p>
+        </div>
+      </section>
+
+      <section id="habits-section" class="section">
         <div class="card habits">
           <div class="card-header">
             <h2>Daily Habits</h2>
@@ -38,7 +55,9 @@
             <button class="btn">Add</button>
           </form>
         </div>
+      </section>
 
+      <section id="workout-section" class="section">
         <div class="card workout">
           <h2>Workout Tracker</h2>
           <form id="workoutForm" class="workout-form">
@@ -67,7 +86,9 @@
             <ul id="exerciseList"></ul>
           </div>
         </div>
+      </section>
 
+      <section id="wellbeing-section" class="section">
         <div class="card wellbeing">
           <h2>Daily Wellbeing Tracker</h2>
           
@@ -124,14 +145,20 @@
             <button id="resetWellbeing" class="btn ghost">Reset All</button>
           </div>
         </div>
+      </section>
 
+      <!-- Weekly Summary Section -->
+      <section id="weekly-summary" class="section">
         <div class="card stats">
           <h2>Weekly Summary</h2>
           <div id="summary" class="summary">
             <p>No data yet. Save today's wellbeing and complete habits to see progress.</p>
           </div>
         </div>
+      </section>
 
+      <!-- Past Notes Section -->
+      <section id="past-notes" class="section">
         <div class="card comments-history">
           <details>
             <summary>Past Daily Comments</summary>
@@ -150,3 +177,4 @@
 
   <script src="app.js"></script>
 </body>
+</html>
